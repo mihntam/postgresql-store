@@ -1,16 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-//importing Pool
 const pool = require("../database/pool");
 
 router.get("/products", async (req, res) => {
   try {
     const { rows } = await pool.query("SELECT * FROM products");
     if (rows.length === 0) {
-      return res
-        .send(501)
-        .json("No Products Or Some Problem in Database Server");
+      return res.send(501).json("Don't have product");
     }
     res.json(rows);
   } catch (e) {
@@ -22,7 +19,6 @@ router.get("/products", async (req, res) => {
 router.get("/products/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
     const { rows } = await pool.query("SELECT * FROM products WHERE id=$1", [
       id,
     ]);
@@ -30,7 +26,7 @@ router.get("/products/:id", async (req, res) => {
     if (rows.length > 0) {
       res.json(rows[0]);
     } else {
-      return res.status(404).json("San pham khong ton tai");
+      return res.status(404).json("Item is not Exits");
     }
   } catch (e) {
     console.error(e.message);

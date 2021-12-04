@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY_FOR_BCRYPT } = process.env;
 
 module.exports = async (req, res, next) => {
   try {
@@ -10,8 +10,8 @@ module.exports = async (req, res, next) => {
       return res.status(403).json("Not Authorized");
     }
 
-    //jwt.verify compair 'token from client' and secretKeyFrom and if 'jwtTokenFromClient' and 'SECRET_KEY' matched the its return payload
-    const payload = jwt.verify(jwtTokenFromClient, SECRET_KEY);
+    //jwt.verify compair 'token from client' and secretKeyFrom and if 'jwtTokenFromClient' and 'SECRET_KEY_FOR_BCRYPT' matched the its return payload
+    const payload = jwt.verify(jwtTokenFromClient, SECRET_KEY_FOR_BCRYPT);
 
     req.user = payload;
     next();

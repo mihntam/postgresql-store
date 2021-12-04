@@ -4,7 +4,7 @@ function getDomainName() {
   if (activeLocal) {
     return "http://localhost:5000";
   } else {
-    return "Put-Your-Backend-Url and 'activeLocal' -> set to 'false'";
+    return "set api url";
   }
 }
 

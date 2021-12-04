@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const authMiddleWare = require("../middleware/authMiddleware");
+const authMiddleWare = require("./../middleware/authMiddleware");
 const pool = require("../database/pool");
 
 router.post("/cart", [authMiddleWare], async (req, res) => {
@@ -16,7 +16,7 @@ router.post("/cart", [authMiddleWare], async (req, res) => {
     if (rows.length > 0) {
       res.json(rows[0]);
     } else {
-      return res.status(404).json("Gio hang trong");
+      return res.status(404).json("N0 Item in Carts");
     }
   } catch (e) {
     console.error(e.message);
@@ -33,11 +33,11 @@ router.get("/cart/:userId", [authMiddleWare], async (req, res) => {
       [userId]
     );
 
-    //Return array
+    //Array return
     if (rows.length > 0) {
       res.json(rows).status(200);
     } else {
-      return res.status(404).json("Gio hang trong");
+      return res.status(404).json("Don't have any items");
     }
   } catch (e) {
     console.error(e.message);
@@ -58,7 +58,7 @@ router.delete("/cart/delete/:cartId", [authMiddleWare], async (req, res) => {
     if (rows.length > 0) {
       res.json(rows[0]).status(204).status("Successfully Deleted");
     } else {
-      return res.status(404).json("Khong the xoa");
+      return res.status(404).json("Can't delete items from carts");
     }
   } catch (e) {
     console.error(e.message);
