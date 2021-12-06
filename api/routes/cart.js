@@ -16,7 +16,7 @@ router.post("/cart", [authMiddleWare], async (req, res) => {
     if (rows.length > 0) {
       res.json(rows[0]);
     } else {
-      return res.status(404).json("N0 Item in Carts");
+      return res.status(404).json("No Item in Carts");
     }
   } catch (e) {
     console.error(e.message);

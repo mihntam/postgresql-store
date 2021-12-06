@@ -1,6 +1,5 @@
 const app = require("./app")();
 require("dotenv").config();
-var path = require("path");
 const { PORT } = process.env;
 
 const dbDetails = require("./database/details");
@@ -17,7 +16,6 @@ pool
   .catch((err) => {
     console.log(err.message);
   });
-// Database connection End
 
 app.get("/", (req, res) => {
   res.send("Demo api");

@@ -64,7 +64,7 @@ function OneItemPage(props) {
   };
 
   function pleaseLogin() {
-    alert("log in plz");
+    alert("Login first");
   }
 
   return (

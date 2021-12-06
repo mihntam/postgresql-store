@@ -44,7 +44,6 @@ router.post("/signup", async (req, res) => {
     res.json(token);
   } catch (e) {
     console.error(e.message);
-
     res.status(500).json(e.message);
   }
 });

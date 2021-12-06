@@ -10,6 +10,9 @@ import Signup from "./components/Signup";
 import { useDisplayToggle } from "./components/custom_hooks/navDisplay";
 
 import activeUser from "./components/custom_hooks/activeUser";
+import ListProduct from "./components/ListProduct";
+import ProductsCreate from "./components/ProductsCreate";
+import ProductEdit from "./components/ProductEdit";
 
 function App() {
   const [user, setUser] = useState({});
@@ -63,15 +66,24 @@ function App() {
                 <Redirect
                   to={{
                     pathname: "/login",
-
                     state: { from: props.location },
                   }}
                 />
               );
             }
-
             return <Cart {...props} DisplaySetFlex={DisplaySetFlex} />;
           }}
+        />
+        <Route exact path="/admin/products" render={() => <ListProduct />} />
+        <Route
+          exact
+          path="/admin/products/create"
+          render={() => <ProductsCreate />}
+        />
+        <Route
+          exact
+          path="/admin/products/edit/:productId"
+          render={() => <ProductEdit />}
         />
       </Switch>
     </div>

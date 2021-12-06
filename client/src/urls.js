@@ -44,6 +44,15 @@ const getOneProductUrl = (id) => `${domainName}/products/${id}`;
 //get all product
 const allProductsUrl = () => `${domainName}/products`;
 
+//create a product
+const createProduct = () => `${domainName}/products/create`;
+
+//edit a product
+const editProduct = (id) => `${domainName}/products/edit/${id}`;
+
+//delete a product
+const deleteProduct = (id) => `${domainName}/products/delete/${id}`;
+
 export {
   cartUserId,
   insertInCartUrl,
@@ -53,4 +62,7 @@ export {
   cartCountUrl,
   getOneProductUrl,
   allProductsUrl,
+  createProduct,
+  editProduct,
+  deleteProduct,
 };
