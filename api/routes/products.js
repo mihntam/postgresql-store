@@ -37,8 +37,16 @@ router.get("/products/:id", async (req, res) => {
 
 router.post("/products/create", async (req, res) => {
   try {
-    const { id, name, cat, img, description, price, rating } = req.body;
-    if (!id || !name || !cat || !description || !price || !rating) {
+    const { id, name, category, img, description, price, rating } = req.body;
+    if (
+      !id ||
+      !name ||
+      !category ||
+      !img ||
+      !description ||
+      !price ||
+      !rating
+    ) {
       return res.status(401).json("Fill up field");
     }
 
@@ -50,13 +58,13 @@ router.post("/products/create", async (req, res) => {
 
     //update to db
     const { rows } = await pool.query(
-      "INSERT INTO products(id, name, cat, img, description, price, rating) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
-      [id, name, cat, img, description, price, rating]
+      "INSERT INTO products(id, name, category, img, description, price, rating) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
+      [id, name, category, img, description, price, rating]
     );
     res.json({
       message: "A new product was created",
       body: {
-        user: { name, cat, price },
+        user: { name, category, price },
       },
     });
   } catch (e) {
@@ -68,11 +76,12 @@ router.post("/products/create", async (req, res) => {
 router.put("/products/edit/:productId", async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, cat, img, description, price, rating } = req.body;
+    console.log(res.body);
+    const { name, category, img, description, price, rating } = req.body;
 
     const { rows } = await pool.query(
-      "UPDATE products SET name = $1, cat = $2, img = $3, description = $4, price = $5, rating = $6 WHERE id = $7",
-      [name, cat, img, description, price, rating, id]
+      "UPDATE products SET name=$1, category=$2, img=$3, description=$4, price=$5, rating = $6 WHERE id=$7",
+      [name, category, img, description, price, rating, id]
     );
     res.json("Update success");
   } catch (error) {

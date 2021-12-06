@@ -18,6 +18,16 @@ function ListProduct() {
     allProducts();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/products/delete/${id}`);
+      alert("Product has been delete");
+    } catch (e) {
+      alert(e);
+    }
+    console.log(id, "has been selected");
+  };
+
   return (
     <div className="listProduct" style={{ margin: "50px" }}>
       <h1>List Product</h1>
@@ -39,7 +49,7 @@ function ListProduct() {
             <tr key={product.id}>
               <td>{product.id}</td>
               <td>{product.name}</td>
-              <td>{product.categories}</td>
+              <td>{product.category}</td>
               <td>{product.price}</td>
               <td>{product.rating}</td>
               <td>
@@ -52,13 +62,17 @@ function ListProduct() {
                   Edit
                 </Link>
                 &nbsp;|&nbsp;
-                <text
+                <a
                   style={{
                     color: "Red",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    handleDelete(product.id);
                   }}
                 >
                   Delete
-                </text>
+                </a>
               </td>
             </tr>
           ))}

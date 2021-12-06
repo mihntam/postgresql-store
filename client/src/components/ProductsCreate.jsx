@@ -1,16 +1,38 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function ProductsCreate() {
   const [id, setId] = useState();
   const [name, setName] = useState();
-  const [categories, setCategories] = useState();
-  const [imgLink, setImgLink] = useState();
+  const [category, setCategory] = useState();
+  const [img, setImg] = useState();
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
   const [rating, setRating] = useState();
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newProduct = {
+      id,
+      name,
+      category,
+      img,
+      description,
+      price,
+      rating,
+    };
+    console.log(newProduct);
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/products/create",
+        newProduct
+      );
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
 
   return (
     <div className="productCreate" style={{ margin: "50px" }}>
@@ -20,18 +42,20 @@ function ProductsCreate() {
       <div className="row">
         <div className="col-md">
           <div>
-            <img
-              src="https://images.pexels.com/photos/1066116/pexels-photo-1066116.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-              className="rounded float-left"
-              alt="product img"
-              style={{
-                width: "300px",
-                height: "300px",
-                objectFit: "cover",
-              }}
-            />
+            {img && (
+              <img
+                src={img}
+                className="rounded float-left"
+                alt="product img"
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  objectFit: "cover",
+                }}
+              />
+            )}
           </div>
-          <form className="row">
+          <form className="row" onSubmit={handleSubmit}>
             <div className="col">
               <div className="form-group">
                 <label className="control-label">Id</label>
@@ -39,6 +63,7 @@ function ProductsCreate() {
                   type="number"
                   className="form-control"
                   placeholder="Enter product id..."
+                  onChange={(e) => setId(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -46,6 +71,7 @@ function ProductsCreate() {
                 <input
                   className="form-control"
                   placeholder="Enter product name..."
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -53,6 +79,7 @@ function ProductsCreate() {
                 <input
                   className="form-control"
                   placeholder="Enter product category..."
+                  onChange={(e) => setCategory(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -60,6 +87,7 @@ function ProductsCreate() {
                 <input
                   className="form-control"
                   placeholder="Enter product image link..."
+                  onChange={(e) => setImg(e.target.value)}
                 />
               </div>
             </div>
@@ -71,6 +99,7 @@ function ProductsCreate() {
                 <textarea
                   className="form-control"
                   placeholder="Enter product description..."
+                  onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </div>
               <div className="form-group">
@@ -79,6 +108,7 @@ function ProductsCreate() {
                   type="number"
                   className="form-control"
                   placeholder="Enter product price..."
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -87,6 +117,9 @@ function ProductsCreate() {
                   type="number"
                   className="form-control"
                   placeholder="Enter product rating..."
+                  min="0"
+                  max="5"
+                  onChange={(e) => setRating(e.target.value)}
                 />
               </div>
               <div className="form-group">
